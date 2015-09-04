@@ -19,7 +19,13 @@ typedef struct {
 DNS_HEADER* parse_header(char* packet, int packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
-    
+//    int x = 0;
+//    for(x = 0; x < 12; x++)
+//    {
+//        printf("%i", packet[x]);
+//    }
+    header->ID = packet[0] << 8 | packet[1];
+    header->QR = ((packet[2] >> 3)  & 0x01); //Not certain this works yet
     return header;
 
 }

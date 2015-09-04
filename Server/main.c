@@ -2,6 +2,7 @@
 #include <winsock.h>
 #include <stdlib.h>
 #include "address_functions.h"
+#include "cdns.h"
 
 int main(int argc, char** argv)
 {
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
            (unsigned char)SERVER.sin_addr.S_un.S_un_b.s_b4);
     printf("Press CTRL + C to quit\n");
 
-
+    
     while(1) {
         CLIENT_LENGTH = (int)sizeof(struct sockaddr_in);
 
@@ -57,7 +58,8 @@ int main(int argc, char** argv)
             WSACleanup();
             exit(0);
         }
-
+        DNS_HEADER* dh = parse_header(&BUFFER, sizeof(BUFFER));
+        printf("dh QR is %u", dh->QR);
         int STARTQ = 0;
         int STOPQ = BYTES_RECVD - 5;
         char Q[STOPQ - 13];
