@@ -16,6 +16,8 @@ typedef struct {
     unsigned int ARCOUNT : 16;
 } DNS_HEADER;
 
+
+
 DNS_HEADER* parse_header(char* packet, int packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
@@ -25,7 +27,8 @@ DNS_HEADER* parse_header(char* packet, int packet_length)
 //        printf("%i", packet[x]);
 //    }
     header->ID = packet[0] << 8 | packet[1];
-    header->QR = ((packet[2] >> 3)  & 0x01); //Not certain this works yet
+    header->QR = ((packet[2] >> 1)  & 0x01); //Not certain this works yet
+    //header->OC = 
     return header;
 
 }
