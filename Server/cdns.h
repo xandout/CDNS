@@ -15,3 +15,11 @@ typedef struct {
     unsigned int AUTHCOUNT : 16;
     unsigned int ARCOUNT : 16;
 } DNS_HEADER;
+
+DNS_HEADER* parse_header(char* packet, int packet_length)
+{
+    DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
+    
+    return header;
+
+}
