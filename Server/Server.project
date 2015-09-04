@@ -22,7 +22,7 @@
   <VirtualDirectory Name="src">
     <File Name="main.c"/>
     <File Name="address_functions.h"/>
-    <File Name="dns_structs.h"/>
+    <File Name="cdns.h"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
