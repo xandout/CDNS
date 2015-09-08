@@ -58,27 +58,30 @@ int main(int argc, char** argv)
             WSACleanup();
             exit(0);
         }
-        DNS_HEADER* dh = parse_header(&BUFFER, sizeof(BUFFER));
-        printf("dh QCOUNT is %d\n", dh->QCOUNT);
-        int STARTQ = 0;
-        int STOPQ = BYTES_RECVD - 5;
-        char Q[STOPQ - 13];
-        Q[STOPQ - 13] = '\0';
-        printf("------\n");
-        int x = 0;
-        for(STARTQ = 13; STARTQ < STOPQ; STARTQ++) {
-
-            if(BUFFER[STARTQ] < 31)
-                BUFFER[STARTQ] = 46;
-
-            Q[x] = BUFFER[STARTQ];
-            x++;
-            if(argc == 4) {
-                if(strcmp(argv[3], "PRINTBYTES") == 0)
-                    printf("%i : %c\n", BUFFER[STARTQ], BUFFER[STARTQ]);
-            }
-        }
-        printf("%s\n", Q);
+//        DNS_HEADER* dh = parse_header(&BUFFER, sizeof(BUFFER));
+//        printf("dh QCOUNT is %d\n", dh->QCOUNT);
+//        
+        QUESTION* qq = parse_question(&BUFFER, BYTES_RECVD);
+        printf("qq QUERY is %s\n", qq->QUERY);
+//        int STARTQ = 0;
+//        int STOPQ = BYTES_RECVD - 5;
+//        char Q[STOPQ - 13];
+//        Q[STOPQ - 13] = '\0';
+//        printf("------\n");
+//        int x = 0;
+//        for(STARTQ = 13; STARTQ < STOPQ; STARTQ++) {
+//
+//            if(BUFFER[STARTQ] < 31)
+//                BUFFER[STARTQ] = 46;
+//
+//            Q[x] = BUFFER[STARTQ];
+//            x++;
+//            if(argc == 4) {
+//                if(strcmp(argv[3], "PRINTBYTES") == 0)
+//                    printf("%i : %c\n", BUFFER[STARTQ], BUFFER[STARTQ]);
+//            }
+//        }
+//        printf("%s\n", Q);
     }
     closesocket(sd);
     WSACleanup();
