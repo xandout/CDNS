@@ -5,7 +5,7 @@
 ## Debug
 ProjectName            :=Server
 ConfigurationName      :=Debug
-WorkspacePath          := "C:\Users\Mitchell\Desktop\CODE\CDNS"
+WorkspacePath          := "C:\Users\Mitchell\Documents\GitHub"
 ProjectPath            := "C:\Users\Mitchell\Documents\GitHub\CDNS\Server"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Mitchell
-Date                   :=04/09/2015
+Date                   :=07/09/2015
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/TDM-GCC-32/bin/g++.exe
 SharedObjectLinkerName :=C:/TDM-GCC-32/bin/g++.exe -shared -fPIC

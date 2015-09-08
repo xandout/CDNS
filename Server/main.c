@@ -59,7 +59,7 @@ int main(int argc, char** argv)
             exit(0);
         }
         DNS_HEADER* dh = parse_header(&BUFFER, sizeof(BUFFER));
-        printf("dh QCOUNT is %u\n", dh->QCOUNT);
+        printf("dh QCOUNT is %d\n", dh->QCOUNT);
         int STARTQ = 0;
         int STOPQ = BYTES_RECVD - 5;
         char Q[STOPQ - 13];

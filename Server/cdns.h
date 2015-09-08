@@ -35,12 +35,7 @@ DNS_HEADER* parse_header(char* packet, int packet_length)
     header->QCOUNT = packet[4] << 8 | packet[5];
     header->ANSCOUNT = packet[6] << 8 | packet[7];
     header->AUTHCOUNT = packet[8] << 8 | packet[9];
-    header->QCOUNT = packet[10] << 8 | packet[11];
-    
-    
-    
-    
-    
+    header->ARCOUNT = packet[10] << 8 | packet[11];
     return header;
 
 }
