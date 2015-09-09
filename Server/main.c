@@ -59,7 +59,7 @@ int main(int argc, char** argv)
             exit(0);
         }      
         QUESTION* qq = parse_question(&BUFFER, BYTES_RECVD);
-        printf("qq QUERY is %s\n", qq->QUERY);
+        printf("qq TYPE is %d\n", qq->TYPE);
     }
     closesocket(sd);
     WSACleanup();

@@ -1,6 +1,16 @@
 #include <string.h>
 #include <stdio.h>
 
+#define DNS_TYPE_A      1
+#define DNS_TYPE_CNAME  5
+#define DNS_TYPE_PTR   12
+#define DNS_TYPE_MX    15
+#define DNS_TYPE_TXT   16
+#define DNS_TYPE_AAAA  28
+#define DNS_TYPE_SRV   33
+#define DNS_TYPE_ANY  255
+#define DNS_TYPE_NSEC  47
+
 typedef struct {
     unsigned int ID : 16;
     unsigned int QR : 1;         // 00000001 1
@@ -48,26 +58,38 @@ typedef struct {
     unsigned int CLASS : 16;
 } QUESTION;
 
-QUESTION* parse_question(char* packet, int packet_length)
+QUESTION* parse_question(const char* packet, int packet_length)
 {
     QUESTION* question = malloc(sizeof(QUESTION));
     
+    
+    //Parse QUERY
     int STARTQ = 0;
     int STOPQ = packet_length - 5;
     char Q[STOPQ - 13];
     Q[STOPQ - 13] = '\0';
-    
     question->QUERY = malloc(STOPQ - 13);
     int x = 0;
     for(STARTQ = 13; STARTQ < STOPQ; STARTQ++) {
 
         if(packet[STARTQ] < 31)
-            packet[STARTQ] = 46;
+        {
+            Q[x] = 46;
+        } else {
+            Q[x] = packet[STARTQ];
+        }
 
-        Q[x] = packet[STARTQ];
+        
         x++;
     }
     strcpy(question->QUERY, Q);
-
+    //END Parse QUERY
+    
+    //Parse TYPE
+    //printf("packet_length is %d.\n PL - 3 = %d\n PL - 2 is %d\n", packet_length, packet[packet_length - 3],   packet[packet_length - 2]);
+    question->TYPE = packet[packet_length - 2] << 8 | packet[packet_length - 3];
+    
+    //END Parse TYPE
+    
     return question;
 }
