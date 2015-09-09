@@ -1,3 +1,6 @@
+#include <string.h>
+#include <stdio.h>
+
 typedef struct {
     unsigned int ID : 16;
     unsigned int QR : 1;         // 00000001 1
@@ -48,10 +51,13 @@ typedef struct {
 QUESTION* parse_question(char* packet, int packet_length)
 {
     QUESTION* question = malloc(sizeof(QUESTION));
+    
     int STARTQ = 0;
     int STOPQ = packet_length - 5;
     char Q[STOPQ - 13];
     Q[STOPQ - 13] = '\0';
+    
+    question->QUERY = malloc(STOPQ - 13);
     int x = 0;
     for(STARTQ = 13; STARTQ < STOPQ; STARTQ++) {
 
@@ -61,9 +67,7 @@ QUESTION* parse_question(char* packet, int packet_length)
         Q[x] = packet[STARTQ];
         x++;
     }
-    //printf("%d\n",sizeof(Q));
-    question->QUERY = malloc(STOPQ - 13);
-//    Need to get Q into question->QUERY
+    strcpy(question->QUERY, Q);
 
     return question;
 }
