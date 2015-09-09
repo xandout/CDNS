@@ -85,11 +85,15 @@ QUESTION* parse_question(const char* packet, int packet_length)
     strcpy(question->QUERY, Q);
     //END Parse QUERY
     
-    //Parse TYPE
-    //printf("packet_length is %d.\n PL - 3 = %d\n PL - 2 is %d\n", packet_length, packet[packet_length - 3],   packet[packet_length - 2]);
+    //Parse TYPE 
     question->TYPE = packet[packet_length - 2] << 8 | packet[packet_length - 3];
     
     //END Parse TYPE
     
+    //Parse CLASS 
+    //I don't trust this, it works but it seems wrong
+    question->CLASS = packet[packet_length - 2] << 8 | packet[packet_length-1];
+    
+    //END Parse CLASS
     return question;
 }
