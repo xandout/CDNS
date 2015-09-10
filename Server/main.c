@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         exit(0);
     }
 
-    strtosockaddr_in("192.168.1.5", &SERVER);
+    strtosockaddr_in("0.0.0.0", &SERVER);
     if(bind(sd, (struct sockaddr*)&SERVER, sizeof(struct sockaddr_in)) == -1) {
         fprintf(stderr, "Could not bind to socket\n");
         closesocket(sd);

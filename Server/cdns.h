@@ -66,7 +66,6 @@ QUESTION* parse_question(const char* packet, int packet_length)
     //Parse QUERY
     int STARTQ = 0;
     int STOPQ = packet_length - 5;
-    printf("%d is STOPQ\n", STOPQ);
     char Q[STOPQ - 13];
     Q[STOPQ - 13] = '\0';
     question->QUERY = malloc(STOPQ - 12);

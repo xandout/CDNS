@@ -10,7 +10,6 @@ void strtosockaddr_in(char dq_addr[], struct sockaddr_in* sock){
     sock->sin_addr.S_un.S_un_b.s_b2 = (unsigned char)OCT2;
     sock->sin_addr.S_un.S_un_b.s_b3 = (unsigned char)OCT3;
     sock->sin_addr.S_un.S_un_b.s_b4 = (unsigned char)OCT4;
-
     }
     fprintf(stderr, "Unable to parse address: %s.  Using 0.0.0.0 instead\n", dq_addr);
 
