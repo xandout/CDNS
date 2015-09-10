@@ -13,7 +13,6 @@ int main(int argc, char** argv)
     SOCKET sd;
     struct sockaddr_in SERVER, CLIENT;
     char BUFFER[4096];
-    struct hostent* HP;
     memset((void*)&SERVER, '\0', sizeof(struct sockaddr_in));
     SERVER.sin_family = AF_INET;
     SERVER.sin_port = htons(PORT);
@@ -60,7 +59,7 @@ int main(int argc, char** argv)
         }      
         QUESTION* qq = parse_question(BUFFER, BYTES_RECVD);
         char *connected_ip = inet_ntoa(CLIENT.sin_addr);
-        printf("QUERY TYPE:%d from %s is %s\n", qq->TYPE, connected_ip, qq->QUERY);
+        printf("QUERY TYPE:%d from %s:%d is %s\n", qq->TYPE, connected_ip, CLIENT.sin_port, qq->QUERY);
     }
     closesocket(sd);
     WSACleanup();
