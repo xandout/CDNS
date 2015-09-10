@@ -30,7 +30,7 @@ typedef struct {
 } DNS_HEADER;
 
 DNS_HEADER* parse_header(char* packet, int packet_length)
-{ // 00000000
+{ 
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
     header->ID = packet[0] << 8 | packet[1];
     header->QR = ((packet[2] & 1) >> 1); // Not certain this works yet
@@ -58,7 +58,7 @@ typedef struct {
     unsigned int CLASS : 16;
 } QUESTION;
 
-QUESTION* parse_question(const char* packet, int packet_length)
+QUESTION* parse_question(char* packet, int packet_length)
 {
     QUESTION* question = malloc(sizeof(QUESTION));
     
@@ -92,7 +92,7 @@ QUESTION* parse_question(const char* packet, int packet_length)
     
     //Parse CLASS 
     //I don't trust this, it works but it seems wrong
-    question->CLASS = packet[packet_length - 1] << 8 | packet[packet_length-0];
+    question->CLASS = packet[packet_length - 1] << 8 | packet[packet_length];
     
     //END Parse CLASS
     return question;

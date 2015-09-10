@@ -58,8 +58,9 @@ int main(int argc, char** argv)
             WSACleanup();
             exit(0);
         }      
-        QUESTION* qq = parse_question(&BUFFER, BYTES_RECVD);
-        printf("QUERY TYPE:%d is %s\n", qq->TYPE, qq->QUERY);
+        QUESTION* qq = parse_question(BUFFER, BYTES_RECVD);
+        char *connected_ip = inet_ntoa(CLIENT.sin_addr);
+        printf("QUERY TYPE:%d from %s is %s\n", qq->TYPE, connected_ip, qq->QUERY);
     }
     closesocket(sd);
     WSACleanup();
