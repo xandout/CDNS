@@ -66,9 +66,10 @@ QUESTION* parse_question(const char* packet, int packet_length)
     //Parse QUERY
     int STARTQ = 0;
     int STOPQ = packet_length - 5;
+    printf("%d is STOPQ\n", STOPQ);
     char Q[STOPQ - 13];
     Q[STOPQ - 13] = '\0';
-    question->QUERY = malloc(STOPQ - 13);
+    question->QUERY = malloc(STOPQ - 12);
     int x = 0;
     for(STARTQ = 13; STARTQ < STOPQ; STARTQ++) {
 
@@ -92,7 +93,7 @@ QUESTION* parse_question(const char* packet, int packet_length)
     
     //Parse CLASS 
     //I don't trust this, it works but it seems wrong
-    question->CLASS = packet[packet_length - 2] << 8 | packet[packet_length-1];
+    question->CLASS = packet[packet_length - 1] << 8 | packet[packet_length-0];
     
     //END Parse CLASS
     return question;

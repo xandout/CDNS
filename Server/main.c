@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         exit(0);
     }
 
-    strtosockaddr_in("192.168.1.119", &SERVER);
+    strtosockaddr_in("192.168.1.5", &SERVER);
     if(bind(sd, (struct sockaddr*)&SERVER, sizeof(struct sockaddr_in)) == -1) {
         fprintf(stderr, "Could not bind to socket\n");
         closesocket(sd);
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
             exit(0);
         }      
         QUESTION* qq = parse_question(&BUFFER, BYTES_RECVD);
-        printf("qq TYPE is %d\n", qq->TYPE);
+        printf("QUERY TYPE:%d is %s\n", qq->TYPE, qq->QUERY);
     }
     closesocket(sd);
     WSACleanup();
