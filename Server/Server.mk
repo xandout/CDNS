@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=Server
 ConfigurationName      :=Debug
-WorkspacePath          := "C:\Users\Mitchell\Desktop\CODE\CDNS"
-ProjectPath            := "C:\Users\Mitchell\Documents\GitHub\CDNS\Server"
+WorkspacePath          := "C:\Users\Turner\Documents\GitHub\CDNS"
+ProjectPath            := "C:\Users\Turner\Documents\GitHub\CDNS\Server"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Mitchell
-Date                   :=10/09/2015
-CodeLitePath           :="C:\Program Files\CodeLite"
+User                   :=Turner
+Date                   :=11/09/2015
+CodeLitePath           :="C:\Program Files (x86)\CodeLite"
 LinkerName             :=C:/TDM-GCC-32/bin/g++.exe
 SharedObjectLinkerName :=C:/TDM-GCC-32/bin/g++.exe -shared -fPIC
 ObjectSuffix           :=.o
@@ -61,7 +61,7 @@ AS       := C:/TDM-GCC-32/bin/as.exe
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=C:\Program Files\CodeLite
+CodeLiteDir:=C:\Program Files (x86)\CodeLite
 Objects0=$(IntermediateDirectory)/main.c$(ObjectSuffix) 
 
 
@@ -94,7 +94,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/main.c$(ObjectSuffix): main.c $(IntermediateDirectory)/main.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "C:/Users/Mitchell/Documents/GitHub/CDNS/Server/main.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "C:/Users/Turner/Documents/GitHub/CDNS/Server/main.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/main.c$(DependSuffix): main.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.c$(ObjectSuffix) -MF$(IntermediateDirectory)/main.c$(DependSuffix) -MM "main.c"
 
