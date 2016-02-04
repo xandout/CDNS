@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		2A384F9A1C5DA89400D1595F /* CDNS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CDNS; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A384F9D1C5DA89400D1595F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2AAC3B981C6313A900705070 /* cdns_structures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdns_structures.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				2A384F9D1C5DA89400D1595F /* main.c */,
+				2AAC3B981C6313A900705070 /* cdns_structures.h */,
 			);
 			path = CDNS;
 			sourceTree = "<group>";
@@ -237,6 +239,7 @@
 				2A384FA31C5DA89400D1595F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
