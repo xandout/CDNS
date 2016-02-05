@@ -35,9 +35,20 @@ int main(void)
             break;
         }
         // Now the magic happens
+        
+
+        
+        
+        
+        
         QUESTION* qq = parse_question(buf, BYTES_RECVD);
+        DNS_HEADER* dh = parse_header(buf, BYTES_RECVD);
+        
+        printf("Header ID:%x\n", dh->ID);
         printf("QUERY TYPE:%d from %s:%d is %s\n", qq->TYPE, inet_ntoa(ADDR_CLIENT.sin_addr),
                ntohs(ADDR_CLIENT.sin_port), qq->QUERY);
+        
+
     }
     
     close(s);

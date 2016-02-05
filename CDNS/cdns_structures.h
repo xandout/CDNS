@@ -41,10 +41,14 @@ typedef struct {
     unsigned int ARCOUNT : 16;   // B11
 } DNS_HEADER;
 
-DNS_HEADER* parse_header(char* packet, int packet_length)
+
+
+DNS_HEADER* parse_header(char* packet, long packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
-    header->ID = packet[0] << 8 | packet[1];
+    memset(header, 0, sizeof(DNS_HEADER));
+    printf("%lx\n", (long)packet[0] << 8 | packet[1]);
+    header->ID = packet[0] << 8 | packet[1]; //This should be possible with bit shifting but fails if packet[0] has leading 0s
     header->QR = ((packet[2] & 1) >> 1); // Not certain this works yet
     header->OC = ((packet[2] & 30) >> 1);
     header->AA = ((packet[2] & 32) >> 1);
@@ -61,6 +65,7 @@ DNS_HEADER* parse_header(char* packet, int packet_length)
     header->ANSCOUNT = packet[6] << 8 | packet[7];
     header->AUTHCOUNT = packet[8] << 8 | packet[9];
     header->ARCOUNT = packet[10] << 8 | packet[11];
+    
     return header;
 }
 
@@ -84,16 +89,11 @@ QUESTION* parse_question(char* packet, long packet_length)
     }
     question->QUERY = malloc(sizeof(qstart));
     strcpy(question->QUERY, qstart);
-
     
-    //Parse TYPE
-    question->TYPE = packet[packet_length - 2] << 8 | packet[packet_length - 3];
-    //END Parse TYPE
+    long last_byte = packet_length - 1;
     
-    //Parse CLASS
-    //I don't trust this, it works but it seems wrong
-    question->CLASS = packet[packet_length - 1] << 8 | packet[packet_length];
-    //END Parse CLASS
+    question->CLASS = packet[last_byte - 1] << 8 | packet[last_byte];
+    question->TYPE = packet[last_byte - 3] << 8 | packet[last_byte - 2];
     return question;
 }
 
