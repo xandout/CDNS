@@ -43,7 +43,7 @@ typedef struct {
 
 
 
-DNS_HEADER* parse_header(char* packet, long packet_length)
+DNS_HEADER* parse_header(unsigned char* packet, long packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
     memset(header, 0, sizeof(DNS_HEADER));
@@ -75,7 +75,7 @@ typedef struct {
     unsigned int CLASS : 16;
 } QUESTION;
 
-QUESTION* parse_question(char* packet, long packet_length)
+QUESTION* parse_question(unsigned char* packet, long packet_length)
 {
     QUESTION* question = malloc(sizeof(QUESTION));
     

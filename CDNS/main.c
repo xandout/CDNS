@@ -16,7 +16,7 @@ int main(void)
 {
     struct sockaddr_in ADDR_SERV, ADDR_CLIENT;
     int s, slen=sizeof(ADDR_CLIENT);
-    char buf[BUFLEN];
+    unsigned char buf[BUFLEN];
     if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
         failure("socket");
     memset((char *) &ADDR_SERV, 0, sizeof(ADDR_SERV));
