@@ -47,7 +47,7 @@ DNS_HEADER* parse_header(unsigned char* packet, long packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
     memset(header, 0, sizeof(DNS_HEADER));
-    printf("%lx\n", (long)packet[0] << 8 | packet[1]);
+    //printf("%lx\n", (long)packet[0] << 8 | packet[1]);
     header->ID = packet[0] << 8 | packet[1]; //This should be possible with bit shifting but fails if packet[0] has leading 0s
     header->QR = ((packet[2] & 1) >> 1); // Not certain this works yet
     header->OC = ((packet[2] & 30) >> 1);
@@ -70,7 +70,7 @@ DNS_HEADER* parse_header(unsigned char* packet, long packet_length)
 }
 
 typedef struct {
-    char* QUERY;
+    unsigned char* QUERY;
     unsigned int TYPE : 16;
     unsigned int CLASS : 16;
 } QUESTION;
@@ -80,7 +80,7 @@ QUESTION* parse_question(unsigned char* packet, long packet_length)
     QUESTION* question = malloc(sizeof(QUESTION));
     
     
-    char* qstart = &packet[sizeof(DNS_HEADER)];
+    unsigned char* qstart = (unsigned char*)&packet[sizeof(DNS_HEADER)];
     int iterator = 1; /* Use 1 here to strip leading char */
     for (iterator = 1; qstart[iterator] != '\0'; iterator++) {
         if (qstart[iterator] < 31) {
@@ -88,7 +88,8 @@ QUESTION* parse_question(unsigned char* packet, long packet_length)
         }
     }
     question->QUERY = malloc(sizeof(qstart));
-    strcpy(question->QUERY, qstart);
+    memcpy(question->QUERY, qstart, packet_length - sizeof(DNS_HEADER));
+    //strcpy(question->QUERY, qstart);
     
     long last_byte = packet_length - 1;
     
