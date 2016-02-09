@@ -8,6 +8,8 @@
 #include "cdns_structures.h"
 #define BUFLEN 4096 /* just in case */
 #define PORT 53 /* default port */
+#define TOGGLE_BIT(val, bitIndex) val ^= (1 << bitIndex)
+
 void failure(char *s)
 {
     perror(s);
@@ -44,11 +46,39 @@ int main(void)
         QUESTION* qq = parse_question(buf, BYTES_RECVD);
         DNS_HEADER* dh = parse_header(buf, BYTES_RECVD);
         
-        printf("Header ID:%x\n", dh->ID);
         printf("QUERY TYPE:%d from %s:%d is %s\n", qq->TYPE, inet_ntoa(ADDR_CLIENT.sin_addr),
                ntohs(ADDR_CLIENT.sin_port), qq->QUERY);
         
-
+        struct in_addr t;
+        inet_aton("192.168.1.1", &t);
+        
+        
+        
+        
+        DNS_ANSWER_RR* rr = malloc(sizeof(DNS_ANSWER_RR));
+        memset(rr, 0, sizeof(DNS_ANSWER_RR));
+        rr->TTL = 3600;
+        rr->NAME = qq->QUERY;
+        rr->CLASS = qq->CLASS;
+        rr->TYPE = qq->TYPE;
+        rr->D_LENGTH = sizeof(t.s_addr);
+        rr->DATA = &t.s_addr;
+        
+        
+        DNS_RESPONSE* dr = malloc(sizeof(DNS_RESPONSE));
+        memset(dr, 0, sizeof(*dr));
+        memcpy(( void*)&dr->header, dh, sizeof(&dh));
+        
+        dr->header.ID = htons(dr->header.ID);
+        dr->header.ANSCOUNT = htons(1);
+        dr->header.QCOUNT = htons(1);
+        
+        
+        printf("DR is %lu bytes", sizeof(*dr));
+        
+        sendto(s, (const void*)dr, sizeof(*dr), 0, (struct sockaddr*)&ADDR_CLIENT, sizeof(ADDR_CLIENT));
+        
+        
     }
     
     close(s);

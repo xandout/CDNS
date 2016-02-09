@@ -15,6 +15,7 @@
 
 #define DNS_TYPE_A      1
 #define DNS_TYPE_CNAME  5
+#define DNS_TYPE_SOA    6
 #define DNS_TYPE_PTR   12
 #define DNS_TYPE_MX    15
 #define DNS_TYPE_TXT   16
@@ -41,13 +42,53 @@ typedef struct {
     unsigned int ARCOUNT : 16;   // B11
 } DNS_HEADER;
 
+//typedef struct {
+//    unsigned int ID : 16;        // B0
+//    unsigned int FLAGS : 16;     // B2
+//    unsigned int QCOUNT : 16;    // B4
+//    unsigned int ANSCOUNT : 16;  // B6
+//    unsigned int AUTHCOUNT : 16; // B8
+//    unsigned int ARCOUNT : 16;   // B10
+//} DNS_HEADER;
 
+typedef struct {
+    unsigned char* QUERY;
+    unsigned int TYPE : 16;
+    unsigned int CLASS : 16;
+} QUESTION;
+
+typedef struct {
+    unsigned char* NAME;
+    unsigned int TYPE : 16;
+    unsigned int CLASS : 16;
+    unsigned long TTL : 32;
+    unsigned int D_LENGTH : 16;
+    unsigned int* DATA;
+}DNS_ANSWER_RR;
+
+typedef struct {
+    DNS_HEADER header;
+    QUESTION question;
+    DNS_ANSWER_RR answer;
+} DNS_RESPONSE;
+
+//DNS_ANSWER_RR* make_answer(unsigned char* name, unsigned char* data, unsigned int type, unsigned int dclass, unsigned long ttl, unsigned int dlength){
+//    DNS_ANSWER_RR* ans = malloc(sizeof(DNS_ANSWER_RR));
+//    
+//    ans->NAME = name;
+//    ans->TYPE = type;
+//    ans->CLASS = dclass;
+//    ans->TTL = ttl;
+//    ans->D_LENGTH = dlength;
+//    ans->DATA = data;
+//    
+//    return ans;
+//}
 
 DNS_HEADER* parse_header(unsigned char* packet, long packet_length)
 {
     DNS_HEADER* header = malloc(sizeof(DNS_HEADER));
     memset(header, 0, sizeof(DNS_HEADER));
-    //printf("%lx\n", (long)packet[0] << 8 | packet[1]);
     header->ID = packet[0] << 8 | packet[1]; //This should be possible with bit shifting but fails if packet[0] has leading 0s
     header->QR = ((packet[2] & 1) >> 1); // Not certain this works yet
     header->OC = ((packet[2] & 30) >> 1);
@@ -69,12 +110,6 @@ DNS_HEADER* parse_header(unsigned char* packet, long packet_length)
     return header;
 }
 
-typedef struct {
-    unsigned char* QUERY;
-    unsigned int TYPE : 16;
-    unsigned int CLASS : 16;
-} QUESTION;
-
 QUESTION* parse_question(unsigned char* packet, long packet_length)
 {
     QUESTION* question = malloc(sizeof(QUESTION));
@@ -89,7 +124,6 @@ QUESTION* parse_question(unsigned char* packet, long packet_length)
     }
     question->QUERY = malloc(sizeof(qstart));
     memcpy(question->QUERY, qstart, packet_length - sizeof(DNS_HEADER));
-    //strcpy(question->QUERY, qstart);
     
     long last_byte = packet_length - 1;
     
